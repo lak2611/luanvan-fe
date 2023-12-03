@@ -9,6 +9,7 @@ const formFields = [
     name: 'title',
     label: 'Tên loại hồ sơ',
     type: 'text',
+    required: true,
   },
 ];
 
@@ -37,7 +38,7 @@ const CreateDocTypeForm = ({ fetchDocTypeList }) => {
       loading={loading}
       btnTitle={'Tạo'}
       title={
-        <Typography mt="10%" mb="20px" variant="h3" style={{ textAlign: 'center' }}>
+        <Typography mt="10%" mb="20px" variant="h0" style={{ textAlign: 'center' }}>
           Tạo loại hồ sơ
         </Typography>
       }

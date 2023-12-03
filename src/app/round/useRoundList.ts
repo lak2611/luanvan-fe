@@ -3,7 +3,6 @@ import { getRoundList } from '../service/services';
 
 const useRoundList = () => {
   const [roundList, setRoundList] = useState([]);
-  console.log('🚀 ~ file: useRoundList.ts:6 ~ useRoundList ~ roundList:', roundList);
 
   async function fetchRoundList() {
     try {

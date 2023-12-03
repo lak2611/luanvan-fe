@@ -48,13 +48,13 @@ const RoundPage = () => {
               fetchRoundList();
               setOpenCreateRound(false);
             }}
-            title={'Bắt đầu kỳ mới năm' + new Date().getFullYear()}
+            title={'Bắt đầu kỳ mới năm ' + new Date().getFullYear()}
             btnTitle={'Tạo kỳ mới'}
             data={{}}
             serviceFunction={createRound}
           />
           <Stack direction={'row'} gap="20px">
-            <Typography variant="h3">Danh sách kỳ phỏng vấn</Typography>
+            <Typography variant="h1">Danh sách kỳ học bổng</Typography>
             {showCreateButton() && (
               <Button
                 variant="outlined"

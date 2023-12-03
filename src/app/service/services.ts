@@ -1,8 +1,41 @@
 import axios from 'axios';
 
+export const SERVER_URL = 'http://192.168.1.10:3001/';
+// export const SERVER_URL = 'http://localhost:3001/';
+
 const client = axios.create({
-  baseURL: 'http://localhost:3001/',
+  baseURL: SERVER_URL,
 });
+
+client.interceptors.request.use(
+  (config) => {
+    // add token to request header
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    // Add your request interceptor error handling logic here
+    return Promise.reject(error);
+  }
+);
+
+client.interceptors.response.use(
+  (response) => {
+    // Add your response interceptor logic here
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    // Add your response interceptor error handling logic here
+    return Promise.reject(error);
+  }
+);
 
 export function submitApplication(data: any) {
   return client.post('application', data);
@@ -46,4 +79,37 @@ export function getApplicationByYear(year: number) {
 
 export function getApplicationById(id: any) {
   return client.get(`application/${id}`);
+}
+
+export function login(data: any) {
+  return client.post('auth/login', data);
+}
+
+export function createNonstudent(data: any) {
+  return client.post('nonstudent', data);
+}
+
+export function getCurrentNonstudent() {
+  return client.get('nonstudent/user');
+}
+
+export function updateCurrentNonstudent(data: any) {
+  return client.patch('nonstudent/user', data);
+}
+
+export function createSponsor(data: any) {
+  return client.post('sponsor', data);
+}
+
+export function getSponsorList() {
+  return client.get('sponsor');
+}
+export function createComment(data: any) {
+  return client.post('comment', data);
+}
+export function publicResult(data: any) {
+  return client.post('round/public-result', data);
+}
+export function updateAppStatus(id: any, data: any) {
+  return client.post(`application/update-status/${id}`, data);
 }

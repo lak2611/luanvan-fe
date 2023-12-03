@@ -17,7 +17,6 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
       type: 'date',
       format: 'DD/MM/YYYY',
       maxDate: moment().endOf('year'),
-      minDate: moment(),
     },
     {
       name: 'endDate',
@@ -31,6 +30,8 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
       name: 'description',
       label: 'Mô tả',
       type: 'text',
+      multiline: true,
+      minRows: 3,
     },
     {
       name: 'docTypeList',
@@ -91,7 +92,7 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
         fields={formFields}
         btnTitle={btnTitle}
         title={
-          <Typography mb="20px" variant="h3" style={{ textAlign: 'center' }}>
+          <Typography mb="20px" variant="h1" style={{ textAlign: 'center' }}>
             {title}
           </Typography>
         }

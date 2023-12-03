@@ -26,7 +26,7 @@ const RoundList = ({ roundList }) => {
                 mt: '10px',
               }}
               onClick={() => {
-                router.push(`/round/${round.year}`);
+                router.push(`round/${round.year}`);
               }}
               variant="contained"
               color="primary"

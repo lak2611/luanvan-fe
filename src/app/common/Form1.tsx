@@ -1,16 +1,17 @@
 'use client';
-import { Autocomplete, Button, Chip, CircularProgress, Container, MenuItem, Stack, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, Chip, CircularProgress, Container, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import React from 'react';
+import React, { useState } from 'react';
 
 const renderField = (field: any, setFormData: any, formData: any, disabled: boolean) => {
   switch (field.type) {
     case 'text':
+    case 'password':
       return (
         <TextField
           key={field.name}
           label={field.label}
-          value={formData[field.name] || ''}
+          value={formData?.[field?.name] || ''}
           onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
           disabled={disabled}
           {...field}
@@ -24,6 +25,20 @@ const renderField = (field: any, setFormData: any, formData: any, disabled: bool
           value={formData[field.name] || null}
           onChange={(newValue) => setFormData({ ...formData, [field.name]: newValue })}
           disabled={disabled}
+          {...field}
+          format="DD/MM/YYYY"
+        />
+      );
+
+    case 'number':
+      return (
+        <TextField
+          key={field.name}
+          label={field.label}
+          value={formData[field.name] || ''}
+          onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
+          disabled={disabled}
+          type="number"
           {...field}
         />
       );
@@ -93,7 +108,36 @@ const Form1 = ({
   containerProps,
   maxWidth = 'sm',
   disabled = false,
+  beforeButton = null,
 }: any) => {
+  const [err, setErr] = useState({});
+  const [localLoading, setLocalLoading] = useState(false);
+
+  const handleSubmitWithValidation = async () => {
+    const err = {};
+    fields.forEach((field: any) => {
+      if (field.required && !formData[field.name]) {
+        err[field.name] = 'Trường này là bắt buộc';
+        return;
+      }
+      if (field.isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData[field.name])) {
+        err[field.name] = 'Email không hợp lệ';
+        return;
+      }
+    });
+    setErr(err);
+    if (Object.keys(err).length === 0) {
+      setLocalLoading(true);
+      await handleSubmit();
+      setLocalLoading(false);
+    }
+  };
+
+  const setFormDataAndRemoveErr = (newFormData: any) => {
+    setFormData(newFormData);
+    setErr({});
+  };
+
   return (
     <Container maxWidth={maxWidth} {...containerProps}>
       <Stack
@@ -105,16 +149,28 @@ const Form1 = ({
         }}
       >
         {title}
-        {fields?.map((field: any) => renderField(field, setFormData, formData, disabled))}
+        {fields?.map((field: any) => {
+          return (
+            <>
+              {renderField(field, setFormDataAndRemoveErr, formData, disabled)}
+              {err[field.name] && (
+                <Typography mt="-15px" color="red">
+                  {err[field.name]}
+                </Typography>
+              )}
+            </>
+          );
+        })}
+        {beforeButton}
         {!hideButton && (
           <Button
             variant="contained"
-            onClick={handleSubmit}
+            onClick={handleSubmitWithValidation}
             sx={{
               color: 'white',
             }}
           >
-            {loading ? <CircularProgress color="inherit" size={24} /> : btnTitle}
+            {localLoading ? <CircularProgress color="inherit" size={24} /> : btnTitle}
           </Button>
         )}
       </Stack>

@@ -4,7 +4,7 @@ import React from 'react';
 
 const Dialog1 = ({ open = true, onClose = () => {}, children = null }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} scroll="body">
       <IconButton
         sx={{
           position: 'absolute',

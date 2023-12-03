@@ -29,7 +29,14 @@ const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      sx={{
+        maxWidth: '800px',
+        mx: 'auto',
+        mt: '30px',
+      }}
+      component={Paper}
+    >
       <Table>
         <TableHead>
           <TableRow>
@@ -74,9 +81,9 @@ const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
                 >
                   {editingId === docType.doctypeId ? 'Lưu' : 'Sửa'}
                 </Button>
-                <Button onClick={() => onDeleteDocType(docType.doctypeId)} variant="outlined" color="error">
+                {/* <Button onClick={() => onDeleteDocType(docType.doctypeId)} variant="outlined" color="error">
                   Xóa
-                </Button>
+                </Button> */}
               </TableCell>
             </TableRow>
           ))}

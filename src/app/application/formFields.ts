@@ -4,6 +4,7 @@ export const APPLICATION_FORM_FIELDS = [
     name: 'fullname',
     label: 'Họ và tên',
     type: 'text',
+    required: true,
   },
   {
     id: 'birthday',
@@ -11,6 +12,7 @@ export const APPLICATION_FORM_FIELDS = [
     label: 'Ngày sinh',
     type: 'date',
     format: 'DD/MM/YYYY',
+    required: true,
   },
   {
     id: 'gender',
@@ -22,18 +24,21 @@ export const APPLICATION_FORM_FIELDS = [
       { value: 'Nữ', label: 'Nữ' },
       { value: 'Khác', label: 'Khác' },
     ],
+    required: true,
   },
   {
     id: 'email',
     name: 'email',
     label: 'Email',
     type: 'text',
+    required: true,
   },
   {
     id: 'phone',
     name: 'phone',
     label: 'Số điện thoại',
     type: 'text',
+    required: true,
   },
   {
     id: 'family',
@@ -41,6 +46,7 @@ export const APPLICATION_FORM_FIELDS = [
     label: 'Gia đình',
     type: 'text',
     multiline: true,
+    required: true,
   },
   {
     id: 'healthStatus',
@@ -48,30 +54,35 @@ export const APPLICATION_FORM_FIELDS = [
     label: 'Tình trạng sức khỏe',
     type: 'text',
     multiline: true,
+    required: true,
   },
   {
     id: 'hometown',
     name: 'hometown',
     label: 'Quê quán',
     type: 'text',
+    required: true,
   },
   {
     id: 'university',
     name: 'university',
     label: 'Trường Đại học',
     type: 'text',
+    required: true,
   },
   {
     id: 'major',
     name: 'major',
     label: 'Ngành học',
     type: 'text',
+    required: true,
   },
   {
     id: 'careerGoal',
     name: 'careerGoal',
     label: 'Mục tiêu nghề nghiệp',
     type: 'text',
+    required: true,
   },
   {
     id: 'scholarEssay',
@@ -80,5 +91,6 @@ export const APPLICATION_FORM_FIELDS = [
     type: 'text',
     multiline: true,
     minRows: 5,
+    required: true,
   },
 ];

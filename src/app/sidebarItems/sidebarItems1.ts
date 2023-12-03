@@ -4,11 +4,15 @@ export const sidebarItems1 = [
     label: 'Kỳ học bổng',
   },
   {
-    id: 'application',
-    label: 'Đơn ứng tuyển',
-  },
-  {
     id: 'doctype',
     label: 'Loại hồ sơ',
+  },
+  {
+    id: 'user',
+    label: 'Người dùng',
+  },
+  {
+    id: 'sponsor',
+    label: 'Thông tin tài trợ',
   },
 ];
