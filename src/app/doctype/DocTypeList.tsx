@@ -1,11 +1,12 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { deleteDocType, getAllDocTypes, updateDocType } from '../service/services';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField, Typography } from '@mui/material';
 
 const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
   const [editingId, setEditingId] = useState(null);
   const [editingValue, setEditingValue] = useState(null);
+  const [errObj, setErrObj] = useState({});
 
   async function onDeleteDocType(id: any) {
     try {
@@ -20,6 +21,13 @@ const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
   }
 
   async function onEndEditing() {
+    if (!editingValue) {
+      setErrObj({
+        ...errObj,
+        [editingId]: 'Tên hồ sơ không được rỗng',
+      });
+      return;
+    }
     try {
       await updateDocType(editingId, { title: editingValue });
       fetchDocTypeList();
@@ -27,6 +35,10 @@ const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
     setEditingId(null);
     setEditingValue(null);
   }
+
+  useEffect(() => {
+    setErrObj({});
+  }, [editingValue]);
 
   return (
     <TableContainer
@@ -53,16 +65,19 @@ const DocTypeList = ({ docTypeList, fetchDocTypeList }) => {
             <TableRow key={docType.doctypeId}>
               <TableCell>
                 {editingId === docType.doctypeId ? (
-                  <TextField
-                    sx={{
-                      width: '100%',
-                    }}
-                    id="outlined-basic"
-                    label="Tên loại hồ sơ"
-                    variant="outlined"
-                    value={editingValue}
-                    onChange={(e) => setEditingValue(e.target.value)}
-                  />
+                  <>
+                    <TextField
+                      sx={{
+                        width: '100%',
+                      }}
+                      id="outlined-basic"
+                      label="Tên loại hồ sơ"
+                      variant="outlined"
+                      value={editingValue}
+                      onChange={(e) => setEditingValue(e.target.value)}
+                    />
+                    {!!errObj[editingId] && <Typography color="red">{errObj[editingId]}</Typography>}
+                  </>
                 ) : (
                   docType.title
                 )}
