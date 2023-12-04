@@ -1,42 +1,49 @@
-import { Container, Stack, TextField, Typography, Button } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import moment, { Moment } from 'moment';
-import React, { useContext, useState } from 'react';
-import { createRound } from '../service/services';
-import Form1 from '../common/Form1';
-import { RoundContext } from './page';
-import useDocTypeList from '../doctype/useDocTypeList';
+import { Container, Stack, TextField, Typography, Button } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
+import moment, { Moment } from "moment";
+import React, { useContext, useState } from "react";
+import { createRound } from "../service/services";
+import Form1 from "../common/Form1";
+import { RoundContext } from "./page";
+import useDocTypeList from "../doctype/useDocTypeList";
 
-const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction = () => {} }: any) => {
+const CreateRound = ({
+  afterSubmit,
+  title,
+  btnTitle,
+  data = {},
+  serviceFunction = () => {},
+}: any) => {
   const { docTypeList } = useDocTypeList();
   //form fields
   const formFields = [
     {
-      name: 'startDate',
-      label: 'Ngày bắt đầu',
-      type: 'date',
-      format: 'DD/MM/YYYY',
-      maxDate: moment().endOf('year'),
+      name: "startDate",
+      label: "Ngày bắt đầu",
+      type: "date",
+      format: "DD/MM/YYYY",
+      maxDate: moment().endOf("year"),
     },
     {
-      name: 'endDate',
-      label: 'Ngày kết thúc',
-      type: 'date',
-      format: 'DD/MM/YYYY',
-      maxDate: moment().endOf('year'),
+      name: "endDate",
+      label: "Ngày kết thúc",
+      type: "date",
+      format: "DD/MM/YYYY",
+      maxDate: moment().endOf("year"),
       minDate: moment(),
     },
     {
-      name: 'description',
-      label: 'Mô tả',
-      type: 'text',
+      name: "description",
+      label: "Mô tả",
+      type: "text",
       multiline: true,
       minRows: 3,
+      required: true,
     },
     {
-      name: 'docTypeList',
-      label: 'Loại tài liệu được yêu cầu',
-      type: 'autocomplete',
+      name: "docTypeList",
+      label: "Loại tài liệu được yêu cầu",
+      type: "autocomplete",
       options: docTypeList.map((docType) => ({
         label: docType.title,
         value: docType.doctypeId,
@@ -62,10 +69,11 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
     setLoading(true);
     const submitData = {
       year: formData.startDate.year(),
-      startDate: formData.startDate.format('YYYY-MM-DD'),
-      endDate: formData.endDate.format('YYYY-MM-DD'),
+      startDate: formData.startDate.format("YYYY-MM-DD"),
+      endDate: formData.endDate.format("YYYY-MM-DD"),
       description: formData.description,
-      docTypeList: formData?.docTypeList?.map((docType: any) => docType.value) || [],
+      docTypeList:
+        formData?.docTypeList?.map((docType: any) => docType.value) || [],
     };
     try {
       let { data } = await serviceFunction(submitData);
@@ -81,7 +89,7 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
     <Container
       maxWidth="lg"
       sx={{
-        py: '50px',
+        py: "50px",
       }}
     >
       <Form1
@@ -92,7 +100,7 @@ const CreateRound = ({ afterSubmit, title, btnTitle, data = {}, serviceFunction 
         fields={formFields}
         btnTitle={btnTitle}
         title={
-          <Typography mb="20px" variant="h1" style={{ textAlign: 'center' }}>
+          <Typography mb="20px" variant="h1" style={{ textAlign: "center" }}>
             {title}
           </Typography>
         }
