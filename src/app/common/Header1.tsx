@@ -1,43 +1,54 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Stack, Box } from '@mui/material';
-import { Home } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
-import { isAdmin, isNonstudent } from '../utils/auth';
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
+  Stack,
+  Box,
+} from "@mui/material";
+import { Home } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
+import { isAdmin, isNonstudent } from "../utils/auth";
 
 const menuItems = [
   {
-    name: 'Kỳ xét học bổng',
-    link: '/public/round',
+    name: "Kỳ xét học bổng",
+    link: "/public/round",
   },
   {
-    name: 'Nộp hồ sơ',
-    link: '/public/apply',
+    name: "Nộp hồ sơ",
+    link: "/public/apply",
   },
   {
-    name: 'Thông tin tài trợ',
-    link: '/public/sponsor',
+    name: "Thông tin tài trợ",
+    link: "/public/sponsor",
   },
 ];
 
 const Header1 = () => {
   const router = useRouter();
-  const [loginText, setLoginText] = useState('');
+  const [loginText, setLoginText] = useState("");
+  const [firstRender, setFirstRender] = useState(false);
 
   useEffect(() => {
+    setFirstRender(true);
     if (isNonstudent()) {
-      setLoginText('Đăng xuất');
+      setLoginText("Đăng xuất");
       return;
     }
-    setLoginText(isAdmin() ? 'Quản lý' : 'Đăng nhập');
+    setLoginText(isAdmin() ? "Quản lý" : "Đăng nhập");
   }, []);
   return (
     <AppBar position="static">
-      <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Stack gap="40px" alignItems={'center'} direction={'row'}>
+      <Toolbar style={{ display: "flex", justifyContent: "space-between" }}>
+        <Stack gap="40px" alignItems={"center"} direction={"row"}>
           <IconButton
             onClick={() => {
-              router.push('/');
+              router.push("/");
             }}
             edge="start"
             color="inherit"
@@ -55,30 +66,30 @@ const Header1 = () => {
               component="div"
               fontWeight={500}
               sx={{
-                '&:hover': {
+                "&:hover": {
                   opacity: [0.9, 0.8, 0.7],
                 },
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
             >
               {item.name}
             </Typography>
           ))}
         </Stack>
-        <Stack direction={'row'} gap="40px">
-          {isNonstudent() && (
+        <Stack direction={"row"} gap="40px">
+          {isNonstudent() && firstRender && (
             <Typography
               onClick={() => {
-                router.push('/profile');
+                router.push("/profile");
               }}
               variant="h6"
               component="div"
               fontWeight={500}
               sx={{
-                '&:hover': {
+                "&:hover": {
                   opacity: [0.9, 0.8, 0.7],
                 },
-                cursor: 'pointer',
+                cursor: "pointer",
               }}
             >
               Thông tin cá nhân
@@ -89,16 +100,16 @@ const Header1 = () => {
               if (isNonstudent()) {
                 localStorage.clear();
               }
-              router.push('/login');
+              router.push("/login");
             }}
             variant="h6"
             component="div"
             fontWeight={500}
             sx={{
-              '&:hover': {
+              "&:hover": {
                 opacity: [0.9, 0.8, 0.7],
               },
-              cursor: 'pointer',
+              cursor: "pointer",
             }}
           >
             {loginText}
